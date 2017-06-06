@@ -14,7 +14,10 @@ class SoldeController extends Controller
     public function DemandesRetrait(){
         $retraits = UtilisateurPro::find(auth::user()->getAuthIdentifier())->retraits;
 
-        return view('commerciale.demanderetrait', compact('retraits'));
+        if(Auth::user()->typeUser == 2)
+            return view('prestataire.demanderetrait', compact('retraits'));
+        if(Auth::user()->typeUser == 1)
+            return view('commerciale.demanderetrait', compact('retraits'));
     }
 
     public function DemanderRetrait(Request $req){

@@ -133,6 +133,11 @@
 									</ul>
 								</li>
 
+								<li>
+									<a href="{{ url('/Prestataires/Categories') }}"><i class="fa fa-shopping-cart"></i> <span class="nav-label">Catégories</span></a>
+								</li>
+
+
                                 <li>
 									<a href=""><i class="fa fa-shopping-cart"></i> <span class="nav-label">Commandes</span></a>
 								</li>
@@ -155,7 +160,7 @@
 									<ul class="nav nav-second-level collapse">
 										<li><a href="">Mon Solde</a></li>
 										<li><a href="">Historique</a></li>
-										<li><a href="">Demande Retrait</a></li>
+										<li><a href="{{ url('/Prestataires/DemandesRetrait') }}">Demande Retrait</a></li>
 									</ul>
 								</li>
 

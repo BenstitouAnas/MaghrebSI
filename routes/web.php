@@ -120,3 +120,17 @@ Route::get('/Prestataires', function () {
     return view('prestataire.home');
 });
 
+Route::get('/Prestataires/DemandesRetrait','SoldeController@DemandesRetrait');
+Route::post('/Prestataires/DemanderRetrait','SoldeController@DemanderRetrait');
+
+// Routes pour la gestion des categories
+
+Route::get('Prestataires/Categories','CategorieController@showCategories');
+
+Route::get('Prestataires/CategoriesData','CategorieController@Categories');
+
+Route::post('Prestataires/CategorieAdd','CategorieController@addCategorie');
+Route::post('Prestataires/CategorieDelete','CategorieController@deleteCategorie');
+
+Route::post('Prestataires/CategorieUpdate','CategorieController@updateCategorie');
+Route::get('Prestataires/CategorieByID/{x}','CategorieController@getCategorieByID');
