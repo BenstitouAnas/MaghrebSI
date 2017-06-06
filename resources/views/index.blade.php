@@ -13,7 +13,7 @@
 		<!-- CSRF Token -->
 		<meta name="csrf-token" content="{{ csrf_token() }}">
 
-		<title>{{ config('app.name', 'Maghreb-SI') }}</title>
+		<title>Maghreb-SI</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="keywords" content="">
@@ -47,7 +47,7 @@
 						<span class="icon icon-bar"></span>
 						<span class="icon icon-bar"></span>
 					</button>
-					<a href="{{ url('/') }}" class="navbar-brand"> {{ config('app.name', 'Maghreb-SI') }}</a>
+					<a href="{{ url('/') }}" class="navbar-brand">Maghreb-SI</a>
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-right text-uppercase">
@@ -58,11 +58,11 @@
 						<li><a href="#contact">Contact</a></li>
                         @if (Route::has('login'))
                             @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}"><button type="button" class="btn btn-info">Se Connecter</button></a></li>
+                            	<li><a href="{{ url('/login') }}"><button type="button" class="btn btn-info">Se Connecter</button></a></li>
                             @else
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                        {{ Auth::user()->nom }} <span class="caret"></span>
                                     </a>
 
                                     <ul class="dropdown-menu" role="menu">
@@ -95,7 +95,7 @@
 						<div class="col-md-10 wow fadeIn" data-wow-delay="0.3s">
 							<h1 class="text-upper">Software Landing Page</h1>
 							<p class="tm-white">Boxer is a fully Responsive, Clean Design, Modern, and Flexible Software Landing Page for startups, businesses and agencies. It is built with HTML5 &amp; CSS3, Bootstrap 3.3.4, Font Awesome 4.3.0, and much more. Designed by <a rel="nofollow" href="http://www.facebook.com/templatemo" target="_parent">templatemo</a>. Images by <a rel="nofollow" href="http://pixabay.com" target="_blank">Pixabay</a></p>
-							<img src="images/software-img.png" class="img-responsive" alt="home img">
+							<img src="{{ asset('images/software-img.png') }}" class="img-responsive" alt="home img">
 						</div>
 						<div class="col-md-1"></div>
 					</div>
@@ -138,7 +138,7 @@
 						<p><i class="fa fa-code"></i>Quis autem velis reprehenderit et quis voluptate velit esse quam.</p>
 					</div>
 					<div class="col-md-6 wow fadeInRight" data-wow-delay="0.6s">
-						<img src="images/software-img.png" class="img-responsive" alt="feature img">
+						<img src="{{ asset('images/software-img.png') }}" class="img-responsive" alt="feature img">
 					</div>
 				</div>
 			</div>
@@ -233,7 +233,7 @@
 						<button class="btn btn-primary text-uppercase"><i class="fa fa-download"></i> Download</button>
 					</div>
 					<div class="col-md-6 wow fadeInRight" data-wow-delay="0.6s">
-						<img src="images/software-img.png" class="img-responsive" alt="feature img">
+						<img src="{{ asset('images/software-img.png') }}" class="img-responsive" alt="feature img">
 					</div>
 				</div>
 			</div>
@@ -291,10 +291,10 @@
 		</footer>
 		<!-- end footer -->
         
-		<script src="js/jquery.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/wow.min.js"></script>
-		<script src="js/jquery.singlePageNav.min.js"></script>
-		<script src="js/custom.js"></script>
+		<script src="{{ asset('js/jquery.js') }}"></script>
+		<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+		<!--<script src="{{ asset('js/wow.min.js') }}"></script>-->
+		<script src="{{ asset('js/jquery.singlePageNav.min.js') }}"></script>
+		<script src="{{ asset('js/custom.js') }}"></script>
 	</body>
 </html>
