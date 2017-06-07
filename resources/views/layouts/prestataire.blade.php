@@ -128,8 +128,8 @@
                                 <li>
 									<a href="#"><i class="fa fa-table"></i> <span class="nav-label">Produits </span><span class="fa arrow"></span></a>
 									<ul class="nav nav-second-level collapse">
-										<li><a href="">Liste Produits</a></li>
-										<li><a href="">Ajouter Produit</a></li>
+										<li><a href="{{ url('/Prestataires/Produits') }}">Liste Produits</a></li>
+										<li><a href="{{ url('/Prestataires/AjouterProduit') }}">Ajouter Produit</a></li>
 									</ul>
 								</li>
 

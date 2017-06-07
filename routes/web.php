@@ -84,15 +84,6 @@ Route::get('admin/DemandesData','CommercialeController@Demandes');
 
 
 
-
-
-
-
-
-
-
-
-
 //*********************************************************************************************************
 //*********************************************************************************************************
 //*********************************************************************************************************
@@ -134,3 +125,15 @@ Route::post('Prestataires/CategorieDelete','CategorieController@deleteCategorie'
 
 Route::post('Prestataires/CategorieUpdate','CategorieController@updateCategorie');
 Route::get('Prestataires/CategorieByID/{x}','CategorieController@getCategorieByID');
+
+// Routes pour la gestion des produits
+
+Route::get('Prestataires/Produits','ProduitController@showProduits');
+Route::get('Prestataires/ProduitsData','ProduitController@Produits');
+
+Route::get('Prestataires/AjouterProduit','ProduitController@showFormAjout');
+
+Route::post('Prestataires/AjouterArticle','ProduitController@ajouterArticle');
+Route::post('Prestataires/AjouterBooking','ProduitController@ajouterBooking');
+Route::post('Prestataires/AjouterDeal','ProduitController@ajouterDeal');
+Route::post('Prestataires/AjouterPrestation','ProduitController@ajouterPrestation');

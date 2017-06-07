@@ -12,9 +12,22 @@ use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
 use DB;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 
 class CategorieController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     public function showCategories(){
         return view('prestataire.categories');
     }
