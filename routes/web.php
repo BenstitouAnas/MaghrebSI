@@ -128,6 +128,10 @@ Route::get('Prestataires/CategorieByID/{x}','CategorieController@getCategorieByI
 
 // Routes pour la gestion des produits
 
+Route::group(['middleware' => ['auth']], function() {
+    // your routes
+
+
 Route::get('Prestataires/Produits','ProduitController@showProduits');
 Route::get('Prestataires/ProduitsData','ProduitController@Produits');
 
@@ -137,3 +141,15 @@ Route::post('Prestataires/AjouterArticle','ProduitController@ajouterArticle');
 Route::post('Prestataires/AjouterBooking','ProduitController@ajouterBooking');
 Route::post('Prestataires/AjouterDeal','ProduitController@ajouterDeal');
 Route::post('Prestataires/AjouterPrestation','ProduitController@ajouterPrestation');
+
+Route::get('Prestataires/ProduitsByID/{x}','ProduitController@getProduitByID');
+
+Route::post('Prestataires/ProduitDealUpdate','ProduitController@updateProduitDeal');
+
+Route::post('Prestataires/DealAdd','ProduitController@dealAdd');
+
+Route::get('Prestataires/DealsData','ProduitController@showDeals');
+Route::post('Prestataires/DealDelete','ProduitController@deleteDeal');
+Route::get('Prestataires/DealByID/{x}','ProduitController@getDealByID');
+Route::post('Prestataires/DealUpdate','ProduitController@updateDeal');
+});

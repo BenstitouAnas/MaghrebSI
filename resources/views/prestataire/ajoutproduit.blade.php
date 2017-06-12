@@ -56,16 +56,6 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-lg-2">Documentation</label>
-                <div class="col-lg-10">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="icon-cloud"></i></span>
-                        <input type="text" class="form-control" placeholder="Lien du documentation du produit ..." name="documentation">
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
                 <label class="control-label col-lg-2">Documentation Technique</label>
                 <div class="col-lg-10">
                     <input type="text" class="form-control" placeholder="Documentation technique ..." name="documentationTechnique">
@@ -166,7 +156,6 @@
           });
 
 
-
           $(document).delegate("#ajouterArticle","click",function(e){
               $.post("./AjouterArticle",{
                         libelle:$("input[name='libelle']").val(),
@@ -178,6 +167,7 @@
                         qte:$("input[name='qte']").val()
                     },function(data, status){
                         //swal("Ajouté !", data, "success");
+                        window.location.replace("ProduitsByID/"+data);
                         $(this).closest('form').find("input[type=text], textarea").val("");
                     });
           });
@@ -192,6 +182,7 @@
                         prix:$("input[name='prix']").val()
                     },function(data, status){
                         //swal("Ajouté !", data, "success");
+                        window.location.replace("ProduitsByID/"+data);
                         $("#formAjoutProduit").trigger("reset");
                     });
           });
@@ -205,6 +196,8 @@
                         image:$("input[name='image']").val()
                     },function(data, status){
                         //swal("Ajouté !", data, "success");
+
+                        window.location.replace("ProduitsByID/"+data);
                         $("#formAjoutProduit").trigger("reset");
                     });
           });
@@ -219,6 +212,7 @@
                         prix:$("input[name='prix']").val()
                     },function(data, status){
                         //swal("Ajouté !", data, "success");
+                        window.location.replace("ProduitsByID/"+data);
                         $("#formAjoutProduit").trigger("reset");
                     });
           });

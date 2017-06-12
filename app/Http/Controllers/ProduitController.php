@@ -33,37 +33,42 @@ class ProduitController extends Controller
 
     public function ajouterArticle(Request $req)
     {
-        DB::table('produits')->insert(['libelle' => $req->libelle,'image' => $req->image, 'documentation' => $req->documentation,
+        $lastInsertedID = DB::table('produits')->insertGetId(['libelle' => $req->libelle,'image' => $req->image, 'documentation' => $req->documentation,
         'documentationTechnique' => $req->documentationTechnique, 'typeProduit' => 0, 'categorie_id' => $req->categorie_id,
         'prix' => $req->prix, 'qte' => $req->qte, 'created_at' => new DateTime(), 'updated_at' => new DateTime()]);
-        //return 'Produit : '.$req->libelle.', bien ajouté !';
 
         Session::flash('message', 'Produit créer avec succès !');
-        return Redirect::to('/Prestataires/Produits');
+        return $lastInsertedID;
     }
 
     public function ajouterBooking(Request $req)
     {
-        DB::table('produits')->insert(['libelle' => $req->libelle,'image' => $req->image, 'documentation' => $req->documentation,
+        $lastInsertedID = DB::table('produits')->insertGetId(['libelle' => $req->libelle,'image' => $req->image, 'documentation' => $req->documentation,
         'documentationTechnique' => $req->documentationTechnique, 'typeProduit' => 1, 'categorie_id' => $req->categorie_id,
         'prix' => $req->prix, 'created_at' => new DateTime(), 'updated_at' => new DateTime()]);
-        return 'Produit : '.$req->libelle.', bien ajouté !';
+        
+        Session::flash('message', 'Produit créer avec succès !');
+        return $lastInsertedID;
     }
 
     public function ajouterDeal(Request $req)
     {
-        DB::table('produits')->insert(['libelle' => $req->libelle,'image' => $req->image, 'documentation' => $req->documentation,
+        $lastInsertedID = DB::table('produits')->insertGetId(['libelle' => $req->libelle,'image' => $req->image, 'documentation' => $req->documentation,
         'documentationTechnique' => $req->documentationTechnique, 'typeProduit' => 2, 'categorie_id' => $req->categorie_id,
         'created_at' => new DateTime(), 'updated_at' => new DateTime()]);
-        return 'Produit : '.$req->libelle.', bien ajouté !';
+
+        Session::flash('message', 'Produit créer avec succès !');
+        return $lastInsertedID;
     }
 
     public function ajouterPrestation(Request $req)
     {
-        DB::table('produits')->insert(['libelle' => $req->libelle,'image' => $req->image, 'documentation' => $req->documentation,
+        $lastInsertedID = DB::table('produits')->insertGetId(['libelle' => $req->libelle,'image' => $req->image, 'documentation' => $req->documentation,
         'documentationTechnique' => $req->documentationTechnique, 'typeProduit' => 3, 'categorie_id' => $req->categorie_id,
         'prix' => $req->prix, 'created_at' => new DateTime(), 'updated_at' => new DateTime()]);
-        return 'Produit : '.$req->libelle.', bien ajouté !';
+        
+        Session::flash('message', 'Produit créer avec succès !');
+        return $lastInsertedID;
     }
 
 
@@ -100,4 +105,61 @@ class ProduitController extends Controller
             ->rawColumns(['action', 'typeProduit', 'documentation'])
             ->make(true);
     }
+
+
+    public function getProduitByID($id){
+        $produit = DB::table('produits')->where('id', $id)->first();
+        $categories = DB::table('categories')->get();
+
+        if ($produit->typeProduit == 0) return 'Article';
+        if ($produit->typeProduit == 1) return view('prestataire.booking', compact('produit', 'categories'));
+        if ($produit->typeProduit == 2) return view('prestataire.deal', compact('produit', 'categories'));
+        if ($produit->typeProduit == 3) return 'Prestation';
+    }
+
+    public function updateProduitDeal(Request $req){
+        $produit = DB::table('produits')->where('id', $req->id)->first();
+        DB::table('produits')
+            ->where('id', $req->id)
+            ->update(['libelle' => $req->libelle, 'documentationTechnique' => $req->documentationTechnique,
+            'image' => $req->image, 'categorie_id' => $req->categorie, 'updated_at' => new DateTime()]);
+
+        return 'Produit Deal : '.$produit->libelle.', bien modifié !';
+    }
+
+    public function dealAdd(Request $req)
+    {
+        $lastInsertedID = DB::table('deals')->insertGetId(['titre' => $req->titre,'prix' => $req->prix, 'nombrePlaces' => $req->nombrePlaces,
+        'dateLimite' => $req->dateLimite, 'produit_id' => $req->produit_id, 'created_at' => new DateTime(), 'updated_at' => new DateTime()]);
+        
+        Session::flash('message', 'Deal créer avec succès !');
+        return 'Deal : '.$req->titre.', bien ajouté !';
+    }
+
+    public function showDeals(){
+        return Datatables::of(DB::table('deals')->select('id','titre', 'prix', 'nombrePlaces', 'dateLimite')->get())
+          ->addColumn('action', '<button type="button" id="Del_Deal" ref="{{$id}}" class="btn btn-link"><i class="icon-cross2"></i></button>&nbsp;&nbsp;<button type="button" id="Edit_Deal" ref="{{$id}}" class="btn btn-link"><i class="icon-pencil7"></i></button>')
+          ->rawColumns(['action'])
+          ->make(true);
+    }
+
+    public function deleteDeal(Request $req){
+        $titre = DB::table('deals')->where('id', $req->id)->first();
+        DB::table('deals')->where('id', $req->id)->delete();
+        return 'Deal : '.$titre->titre.', bien supprimé !';
+    }
+
+    public function getDealByID($id){
+        return response()->json(DB::table('deals')->where('id', $id)->first());
+    }
+
+    public function updateDeal(Request $req){
+        $titre = DB::table('deals')->where('id', $req->id)->first();
+        DB::table('deals')
+            ->where('id', $req->id)
+            ->update(['titre' => $req->titre,'prix' => $req->prix, 'nombrePlaces' => $req->nombrePlaces, 'dateLimite' => $req->dateLimite,
+            'created_at' => new DateTime()]);
+        return 'Deal : '.$titre->titre.', bien modifié !';
+    }
+
 }
