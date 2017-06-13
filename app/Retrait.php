@@ -11,7 +11,6 @@ class Retrait extends Model
 	public $timestamps = true;
 
 	protected $casts = [
-		'montant' => 'int',
 		'utilisateur_id' => 'int'
 	];
 

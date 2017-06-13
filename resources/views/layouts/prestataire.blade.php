@@ -11,7 +11,6 @@
 		<!-- Global stylesheets -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 	<link href="{{ asset('assets/css/icons/icomoon/styles.css')}}" rel="stylesheet" type="text/css">
-	<link href="{{ asset('assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('assets/css/icons/fontawesome/styles.min.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('assets/css/core.css') }}" rel="stylesheet" type="text/css">
@@ -139,7 +138,7 @@
 
 
                                 <li>
-									<a href=""><i class="fa fa-shopping-cart"></i> <span class="nav-label">Commandes</span></a>
+									<a href="{{ url('/Prestataires/Commandes') }}"><i class="fa fa-shopping-cart"></i> <span class="nav-label">Commandes</span></a>
 								</li>
 
 								<li>
@@ -149,7 +148,7 @@
                                 <li>
 									<a href="#"><i class="fa fa-ticket"></i> <span class="nav-label">Tickets </span><span class="fa arrow"></span></a>
 									<ul class="nav nav-second-level collapse">
-										<li><a href="">Tickets</a></li>
+										<li><a href="{{ url('/Prestataires/Tickets') }}">Tickets</a></li>
 										<li><a href="">Ouvrir Tickets</a></li>
 									</ul>
 
@@ -159,7 +158,7 @@
 									<a href="#"><i class="fa fa-money"></i> <span class="nav-label">Solde </span><span class="fa arrow"></span></a>
 									<ul class="nav nav-second-level collapse">
 										<li><a href="">Mon Solde</a></li>
-										<li><a href="">Historique</a></li>
+										<li><a href="{{ url('/Prestataires/Transactions') }}">Historique</a></li>
 										<li><a href="{{ url('/Prestataires/DemandesRetrait') }}">Demande Retrait</a></li>
 									</ul>
 								</li>

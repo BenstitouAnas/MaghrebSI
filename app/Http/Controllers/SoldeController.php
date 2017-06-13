@@ -9,6 +9,8 @@ use App\UtilisateurPro;
 use App\User;
 use App\Retrait;
 
+use DB;
+
 class SoldeController extends Controller
 {
     public function DemandesRetrait(){
@@ -42,4 +44,17 @@ class SoldeController extends Controller
         return 'Demande bien envoyée !';
         //return Redirect::to('/Commerciales');
     }
+
+    public function showTransactions(){
+        $transactions =  DB::table('transactions')->where('utilisateur_id', auth::user()->getAuthIdentifier())
+               ->orderBy('created_at', 'desc')
+               ->take(10)
+               ->get();
+
+        if(Auth::user()->typeUser == 2)
+            return view('prestataire.transactions', compact('transactions'));
+        if(Auth::user()->typeUser == 1)
+            return view('commerciale.transactions', compact('transactions'));
+    }
+
 }

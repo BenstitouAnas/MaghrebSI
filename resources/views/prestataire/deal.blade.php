@@ -11,6 +11,8 @@
 
   <script type="text/javascript" src="{{asset('assets/js/plugins/forms/inputs/touchspin.min.js')}}"></script>
 
+  <script type="text/javascript"> idDealData = {{$produit->id}}</script>
+
   <script type="text/javascript" src="{{asset('js/prestataire/datatables_deals.js')}}"></script>
 
 @endsection
@@ -156,7 +158,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-link" data-dismiss="modal">Retour</button>
-                        <button type="button" class="btn btn-primary actionbutton2" id="Edit">Modifier</button>
+                        <button type="button" class="btn btn-primary" id="addDeal">Enregistrer</button>
                     </div>
                 </form>
             </div>
@@ -246,12 +248,10 @@
                 $("#formprestataire").trigger("reset");
                 $.uniform.update();
                 $(".modal-title").html("Ajouter Deal");
-                $(".actionbutton").attr("id","Add");
-                $(".actionbutton").html("Ajouter");
                 $('#modalInfoPrestataire').modal('show');
           });
 
-          $(document).delegate("#Add","click",function(e){
+          $(document).delegate("#addDeal","click",function(e){
               $.post("../DealAdd",{
                   produit_id:$(".editmodale input[name='id']").val(),
                   titre:$(".editmodale2 input[name='titre']").val(),

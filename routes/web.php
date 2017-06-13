@@ -53,14 +53,14 @@ Route::get('admin/CapaciteByID/{x}','RoleCapaciteController@getCapaciteByID');
 
 
        
-Route::get('admin/PrestatairesData','PrestataireController@Prestataires')->middleware('auth');
+Route::get('admin/PrestatairesData','PrestataireController@Prestataires');
 
-Route::get('admin/Prestataires','PrestataireController@showPrestataires')->middleware('auth');
-Route::post('admin/PrestataireAdd','PrestataireController@addPrestataire')->middleware('auth');
-Route::post('admin/PrestataireDelete','PrestataireController@deletePrestataire')->middleware('auth');
+Route::get('admin/Prestataires','PrestataireController@showPrestataires');
+Route::post('admin/PrestataireAdd','PrestataireController@addPrestataire');
+Route::post('admin/PrestataireDelete','PrestataireController@deletePrestataire');
 
-Route::post('admin/PrestataireUpdate','PrestataireController@updatePrestataire')->middleware('auth');
-Route::get('admin/PrestataireByID/{x}','PrestataireController@getPrestataireByID')->middleware('auth');
+Route::post('admin/PrestataireUpdate','PrestataireController@updatePrestataire');
+Route::get('admin/PrestataireByID/{x}','PrestataireController@getPrestataireByID');
 
 Route::post('admin/PrestataireSendEmail','PrestataireController@PrestataireSendEmail')->middleware('auth');
 
@@ -113,6 +113,10 @@ Route::get('/Prestataires', function () {
 
 Route::get('/Prestataires/DemandesRetrait','SoldeController@DemandesRetrait');
 Route::post('/Prestataires/DemanderRetrait','SoldeController@DemanderRetrait');
+Route::get('/Prestataires/Transactions','SoldeController@showTransactions');
+
+
+Route::get('/Prestataires/Tickets','TicketController@showTtickets');
 
 // Routes pour la gestion des categories
 
@@ -148,8 +152,21 @@ Route::post('Prestataires/ProduitDealUpdate','ProduitController@updateProduitDea
 
 Route::post('Prestataires/DealAdd','ProduitController@dealAdd');
 
-Route::get('Prestataires/DealsData','ProduitController@showDeals');
+Route::get('Prestataires/DealsData/{x}','ProduitController@showDeals');
 Route::post('Prestataires/DealDelete','ProduitController@deleteDeal');
 Route::get('Prestataires/DealByID/{x}','ProduitController@getDealByID');
 Route::post('Prestataires/DealUpdate','ProduitController@updateDeal');
+
+
+// Routes pour la gestion des commandes
+
+Route::get('Prestataires/Commandes','CommandeController@showCommandes');
+
+Route::get('Prestataires/CommandesData','CommandeController@Commandes');
+
+//Route::post('Prestataires/CategorieAdd','CategorieController@addCategorie');
+//Route::post('Prestataires/CategorieDelete','CategorieController@deleteCategorie');
+
+//Route::post('Prestataires/CategorieUpdate','CategorieController@updateCategorie');
+Route::get('Prestataires/CommandeByID/{x}','CommandeController@getCommandeByID');
 });

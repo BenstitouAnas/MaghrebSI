@@ -53,7 +53,7 @@ $(function() {
         }],
         processing: true,
         serverSide: true,
-        ajax: '../DealsData',
+        ajax: '../DealsData/' + idDealData,
         columns: [{
             data: 'titre',
             name: 'titre'

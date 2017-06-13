@@ -42,4 +42,10 @@ class UtilisateurPro extends Authenticatable
 	{
 		return $this->hasMany(Retrait::class, 'utilisateur_id');
 	}
+
+	public function transactions()
+	{
+		return $this->hasMany(Transaction::class, 'utilisateur_id');
+	}
+	
 }

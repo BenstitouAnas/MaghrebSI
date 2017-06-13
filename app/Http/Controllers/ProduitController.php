@@ -25,6 +25,43 @@ use Illuminate\Support\Facades\Session;
 
 class ProduitController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+     public function Produits(){
+        return Datatables::of(DB::table('produits')->select('produits.id','libelle','image','typeProduit','documentation','prix', 'qte', 'titre')
+            ->join('categories', function ($join) {
+                $join->on('produits.categorie_id', '=', 'categories.id');
+            })
+            ->get())
+            ->addColumn('action', '<button type="button" id="InfosPrestataire" ref="{{$id}}" class="btn btn-default"><i class="icon-plus2 position-left"></i> Infos</button>')
+            ->addColumn('typeProduit', function($cc){
+                if ($cc->typeProduit == '0') return '<span class="label label-success">Article e-commerce</span>';
+                if ($cc->typeProduit == '1') return '<span class="label label-info">Booking</span>';
+                if ($cc->typeProduit == '2') return '<span class="label label-danger">Deal</span>';
+                if ($cc->typeProduit == '3') return '<span class="label label-danger">Préstation</span>';
+            })
+            ->editColumn('categorie',function($cl) {
+                    $ff = DB::table('categories')->where("titre",$cl->titre)->first();
+                    return $ff->titre;
+                })
+            ->addColumn('documentation',function($cll) {
+                    $pr = DB::table('produits')->where("id", $cll->id)->first();
+                    return '<a href="'.$pr->documentation.'" target="_blank"><button type="button" id="" value="'.$pr->documentation.'" class="btn btn-group-vertical btn-block">
+                        <span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>
+                    </button></a>';
+                })
+            ->rawColumns(['action', 'typeProduit', 'documentation'])
+            ->make(true);
+    }
+
     public function showFormAjout()
     {
         $categories = DB::table('categories')->get();
@@ -79,32 +116,7 @@ class ProduitController extends Controller
     }
 
 
-    public function Produits(){
-        return Datatables::of(DB::table('produits')->select('produits.id','libelle','image','typeProduit','documentation','prix', 'qte', 'titre')
-            ->join('categories', function ($join) {
-                $join->on('produits.categorie_id', '=', 'categories.id');
-            })
-            ->get())
-            ->addColumn('action', '<button type="button" id="InfosPrestataire" ref="{{$id}}" class="btn btn-default"><i class="icon-plus2 position-left"></i> Infos</button>')
-            ->addColumn('typeProduit', function($cc){
-                if ($cc->typeProduit == '0') return '<span class="label label-success">Article e-commerce</span>';
-                if ($cc->typeProduit == '1') return '<span class="label label-info">Booking</span>';
-                if ($cc->typeProduit == '2') return '<span class="label label-danger">Deal</span>';
-                if ($cc->typeProduit == '3') return '<span class="label label-danger">Préstation</span>';
-            })
-            ->editColumn('categorie',function($cl) {
-                    $ff = DB::table('categories')->where("titre",$cl->titre)->first();
-                    return $ff->titre;
-                })
-            ->addColumn('documentation',function($cll) {
-                    $pr = DB::table('produits')->where("id", $cll->id)->first();
-                    return '<a href="'.$pr->documentation.'" target="_blank"><button type="button" id="" value="'.$pr->documentation.'" class="btn btn-group-vertical btn-block">
-                        <span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>
-                    </button></a>';
-                })
-            ->rawColumns(['action', 'typeProduit', 'documentation'])
-            ->make(true);
-    }
+   
 
 
     public function getProduitByID($id){
@@ -136,8 +148,8 @@ class ProduitController extends Controller
         return 'Deal : '.$req->titre.', bien ajouté !';
     }
 
-    public function showDeals(){
-        return Datatables::of(DB::table('deals')->select('id','titre', 'prix', 'nombrePlaces', 'dateLimite')->get())
+    public function showDeals($id){
+        return Datatables::of(DB::table('deals')->select('id','titre', 'prix', 'nombrePlaces', 'dateLimite')->where('produit_id', $id)->get())
           ->addColumn('action', '<button type="button" id="Del_Deal" ref="{{$id}}" class="btn btn-link"><i class="icon-cross2"></i></button>&nbsp;&nbsp;<button type="button" id="Edit_Deal" ref="{{$id}}" class="btn btn-link"><i class="icon-pencil7"></i></button>')
           ->rawColumns(['action'])
           ->make(true);
