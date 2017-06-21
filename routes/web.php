@@ -107,7 +107,7 @@ Route::post('/Commerciales/DemanderRetrait','SoldeController@DemanderRetrait');
 //*********************************************************************************************************
 
 
-Route::get('/Prestataires', function () {
+Route::get('Prestataires', function () {
     return view('prestataire.home');
 });
 
@@ -132,7 +132,7 @@ Route::get('Prestataires/CategorieByID/{x}','CategorieController@getCategorieByI
 
 // Routes pour la gestion des produits
 
-Route::group(['middleware' => ['auth']], function() {
+//Route::group(['middleware' => ['auth']], function() {
     // your routes
 
 
@@ -147,6 +147,10 @@ Route::post('Prestataires/AjouterDeal','ProduitController@ajouterDeal');
 Route::post('Prestataires/AjouterPrestation','ProduitController@ajouterPrestation');
 
 Route::get('Prestataires/ProduitsByID/{x}','ProduitController@getProduitByID');
+
+Route::get('Prestataires/AriclePrestationByID/{x}','ProduitController@getArticlePrestataionByID');
+
+Route::post('Prestataires/ArticleUpdate','ProduitController@updateArticle');
 
 Route::post('Prestataires/ProduitDealUpdate','ProduitController@updateProduitDeal');
 
@@ -169,4 +173,18 @@ Route::get('Prestataires/CommandesData','CommandeController@Commandes');
 
 //Route::post('Prestataires/CategorieUpdate','CategorieController@updateCategorie');
 Route::get('Prestataires/CommandeByID/{x}','CommandeController@getCommandeByID');
+//});
+
+
+
+
+
+
+
+
+Route::get('/Clients', function () {
+    return view('client.home');
 });
+
+Route::get('/Clients/Tickets','ClientController@showTtickets');
+Route::get('/Clients/DetailleTicketClient/{x}','ClientController@showDetaillesTicket');

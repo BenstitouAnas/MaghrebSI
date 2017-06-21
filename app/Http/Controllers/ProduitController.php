@@ -22,6 +22,7 @@ use App\User;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class ProduitController extends Controller
 {
@@ -36,18 +37,26 @@ class ProduitController extends Controller
     }
 
      public function Produits(){
-        return Datatables::of(DB::table('produits')->select('produits.id','libelle','image','typeProduit','documentation','prix', 'qte', 'titre')
+        return Datatables::of(DB::table('produits')->select('produits.id','libelle','image','typeProduit','documentation','prix', 'qte', 'titre', 'categorie_id')
             ->join('categories', function ($join) {
                 $join->on('produits.categorie_id', '=', 'categories.id');
             })
             ->get())
-            ->addColumn('action', '<button type="button" id="InfosPrestataire" ref="{{$id}}" class="btn btn-default"><i class="icon-plus2 position-left"></i> Infos</button>')
+            ->addColumn('action', function($tt){
+                if( $tt->typeProduit == '0' ) return '<button type="button" id="InfoArticle" ref="'.$tt->id.'" class="btn btn-default"><i class="icon-plus2 position-left"></i> Infos</button>';
+                if( $tt->typeProduit == '1' ) return '<a href="../Prestataires/ProduitsByID/'. $tt->id .'"><button type="button" class="btn btn-default"><i class="icon-plus2 position-left"></i> Infos</button></a>';
+                if( $tt->typeProduit == '2' ) return '<a href="../Prestataires/ProduitsByID/'. $tt->id .'"><button type="button" class="btn btn-default"><i class="icon-plus2 position-left"></i> Infos</button></a>';
+                if( $tt->typeProduit == '3 ') return '<button type="button" id="InfoPrestataion" ref="'.$tt->id.'" class="btn btn-default"><i class="icon-plus2 position-left"></i> Infos</button>';
+            })
+            //'<button type="button" id="InfosPrestataire" ref="{{$id}}" class="btn btn-default"><i class="icon-plus2 position-left"></i> Infos</button>')
             ->addColumn('typeProduit', function($cc){
                 if ($cc->typeProduit == '0') return '<span class="label label-success">Article e-commerce</span>';
                 if ($cc->typeProduit == '1') return '<span class="label label-info">Booking</span>';
                 if ($cc->typeProduit == '2') return '<span class="label label-danger">Deal</span>';
-                if ($cc->typeProduit == '3') return '<span class="label label-danger">Préstation</span>';
+                if ($cc->typeProduit == '3') return '<span class="label label-warning">Préstation</span>';
             })
+            ->addColumn('image', '<img src="{{url("assets/images/brands/amazon.png")}}" class="img-circle img-xs" alt="">'
+                )
             ->editColumn('categorie',function($cl) {
                     $ff = DB::table('categories')->where("titre",$cl->titre)->first();
                     return $ff->titre;
@@ -58,13 +67,13 @@ class ProduitController extends Controller
                         <span class="glyphicon glyphicon-cloud" aria-hidden="true"></span>
                     </button></a>';
                 })
-            ->rawColumns(['action', 'typeProduit', 'documentation'])
+            ->rawColumns(['action', 'typeProduit', 'documentation', 'image'])
             ->make(true);
     }
 
     public function showFormAjout()
     {
-        $categories = DB::table('categories')->get();
+        $categories = DB::table('categories')->where('utilisateur_id', Auth::user()->getAuthIdentifier())->get();
         return view('prestataire.ajoutproduit', compact('categories'));
     }
 
@@ -75,7 +84,7 @@ class ProduitController extends Controller
         'prix' => $req->prix, 'qte' => $req->qte, 'created_at' => new DateTime(), 'updated_at' => new DateTime()]);
 
         Session::flash('message', 'Produit créer avec succès !');
-        return $lastInsertedID;
+        return view('prestataire.produits');
     }
 
     public function ajouterBooking(Request $req)
@@ -105,7 +114,7 @@ class ProduitController extends Controller
         'prix' => $req->prix, 'created_at' => new DateTime(), 'updated_at' => new DateTime()]);
         
         Session::flash('message', 'Produit créer avec succès !');
-        return $lastInsertedID;
+        return view('prestataire.produits');
     }
 
 
@@ -116,14 +125,11 @@ class ProduitController extends Controller
     }
 
 
-   
-
-
     public function getProduitByID($id){
         $produit = DB::table('produits')->where('id', $id)->first();
-        $categories = DB::table('categories')->get();
+        $categories = DB::table('categories')->where('utilisateur_id', Auth::user()->getAuthIdentifier())->get();
 
-        if ($produit->typeProduit == 0) return 'Article';
+        if ($produit->typeProduit == 0) return view('prestataire.produits');
         if ($produit->typeProduit == 1) return view('prestataire.booking', compact('produit', 'categories'));
         if ($produit->typeProduit == 2) return view('prestataire.deal', compact('produit', 'categories'));
         if ($produit->typeProduit == 3) return 'Prestation';
@@ -170,8 +176,22 @@ class ProduitController extends Controller
         DB::table('deals')
             ->where('id', $req->id)
             ->update(['titre' => $req->titre,'prix' => $req->prix, 'nombrePlaces' => $req->nombrePlaces, 'dateLimite' => $req->dateLimite,
-            'created_at' => new DateTime()]);
+            'updated_at' => new DateTime()]);
         return 'Deal : '.$titre->titre.', bien modifié !';
+    }
+
+    public function getArticlePrestataionByID($id){
+        return response()->json(DB::table('produits')->where('id', $id)->first());
+    }
+
+    public function updateArticle(Request $req){
+        $prestataire = DB::table('produits')->where('id', $req->id)->first();
+        DB::table('produits')
+            ->where('id', $req->id)
+            ->update(['libelle' => $req->libelle, 'documentation' => $req->documentation, 'documentationTechnique' => $req->documentationTechnique,
+            'categorie_id' => $req->categorie_id, 'updated_at' => new DateTime()]);
+
+        return 'Péstataire : '.$prestataire->libelle.', bien modifié !';
     }
 
 }

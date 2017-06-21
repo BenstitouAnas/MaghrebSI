@@ -15,11 +15,13 @@ class CreateCommandeTable extends Migration
     {
         Schema::create('commandes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('client_id');
+            $table->unsignedInteger('client_id');
             $table->string('etat')->default('En Cours des Vérification');
-            $table->string('precision');
+            $table->string('precision')->nullable();
             $table->double('montantTotalHT', 15, 8);
             $table->timestamps();
+
+            //$table->foreign('client_id')->references('id')->on('clients');
         });
     }
 

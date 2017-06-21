@@ -15,10 +15,19 @@ class CrateCapaciteRoleTable extends Migration
      {
          Schema::create('capacite_role', function (Blueprint $table) {
              $table->increments('id');
-             $table->integer('capacite_id');
-             $table->integer('role_id');
+             $table->unsignedInteger('capacite_id');
+             $table->unsignedInteger('role_id');
              $table->timestamps();
+
+             //$table->foreign('capacite_id')->references('id')->on('capacities');
+             //$table->foreign('role_id')->references('id')->on('roles');
          });
+
+         Schema::table('capacite_role', function (Blueprint $table) {
+            
+            $table->foreign('role_id')->references('id')->on('roles');
+            //$table->foreign('capacite_id')->references('id')->on('capacities');
+        });
      }
 
     /**

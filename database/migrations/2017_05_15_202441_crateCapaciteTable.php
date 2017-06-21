@@ -15,8 +15,8 @@ class CrateCapaciteTable extends Migration
     {
         Schema::create('capacites', function (Blueprint $table) {
           $table->increments('id');
-            $table->string('capacite');
-            $table->timestamps();
+          $table->string('capacite');
+          $table->timestamps();
         });
     }
 

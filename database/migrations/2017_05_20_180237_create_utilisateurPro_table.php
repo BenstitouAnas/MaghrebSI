@@ -15,8 +15,8 @@ class CreateUtilisateurProTable extends Migration
     {
         Schema::create('utilisateurpros', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nom');
-            $table->string('prenom');
+            $table->string('nom', 50);
+            $table->string('prenom', 50);
             $table->string('password');
             $table->string('email')->unique();
             $table->string('tel')->nullable();
@@ -24,14 +24,17 @@ class CreateUtilisateurProTable extends Migration
             $table->string('compagnie')->nullable();
             $table->string('identifiantLegale')->nullable();
             $table->string('statusEntreprise')->nullable();
-            $table->double('valeurTVA', 15, 3);
-            $table->double('soldeHT', 15, 3);
-            $table->integer('role_id')->default(1);
-            $table->integer('superieur')->default(0);
+            $table->double('valeurTVA', 15, 3)->default(0.0);
+            $table->double('soldeHT', 15, 3)->default(0.0);
+            $table->unsignedInteger('role_id')->default(1);
+            $table->unsignedInteger('superieur')->default(0);
             $table->integer('typeUser')->default(1);
             $table->string('etat')->default('Attente');
             $table->rememberToken();
             $table->timestamps();
+
+            //$table->foreign('role_id')->references('id')->on('roles');
+            //$table->foreign('superieur')->references('id')->on('utilisateurpros');
         });
     }
 

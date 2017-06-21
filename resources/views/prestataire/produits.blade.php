@@ -70,67 +70,54 @@
                     <form id="formprestataire" action="get" onsubmit="return false;">
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <label>Nom</label>
-                                    <input type="text" placeholder="Nom" class="form-control" name="nom">
+                                <div class="col-sm-12">
+                                    <label>Libelle</label>
+                                    <input type="text" placeholder="Libelle" class="form-control" name="libelle">
                                     <input type="hidden" class="form-control" name="id">
                                 </div>
+                            </div>
+                        </div>
 
-                                <div class="col-sm-6">
-                                    <label>Prénom</label>
-                                    <input type="text" placeholder="Prénom" class="form-control" name="prenom">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>Documentation</label>
+                                    <input type="text" placeholder="Documentation" class="form-control" name="documentation">
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <label>Email</label>
-                                    <input type="email" placeholder="Email" class="form-control" name="email">
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <label>Téléphone</label>
-                                    <input type="text" placeholder="Téléphone" class="form-control" name="tel">
+                                <div class="col-sm-12">
+                                    <label>Documentation Technique</label>
+                                    <input type="text" placeholder=">Documentation Technique" class="form-control" name="documentationTechnique">
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-sm-4">
-                                    <label>Status Entreprise</label>
-                                    <select name="statusEntreprise" class="form-control" id="selectEtat">
-                                        <option value="Entrepreneur">Entrepreneur</option>
-                                        <option value="AutoEntrepreneur">Auto Entrepreneur</option>
+
+                                <div class="col-sm-6">
+                                    <label>Catégorie</label>
+                                    <select name="categorie" class="form-control" id="selectCategorie">
+                                        <option value="4">Ete</option>
+                                        <option value="1">Hiver</option>
+                                        <option value="2">Informatique</option>
+                                        <option value="3">Autre</option>
                                     </select>
                                 </div>
 
-                                <div class="col-sm-4">
-                                    <label>Compagnie</label>
-                                    <input type="text" placeholder="Compagnie" class="form-control" name="compagnie">
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label>Identifiant Légale</label>
-                                    <input type="text" placeholder="Identifiant Légale" class="form-control" name="identifiantLegale">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-
                                 <div class="col-sm-6">
-                                    <label>Etat</label>
-                                    <select name="etat" class="form-control" id="selectEtat">
-                                        <option value="Confirme">Confirmé</option>
-                                        <option value="Attente">En Attente</option>
-                                        <option value="Suspendue">Suspendue</option>
-                                        <option value="Autre">Autre</option>
-                                    </select>
+                                    <label>Image Produit</label>
+                                    <div class="uploader">
+                                        <input id="imageProduit" type="file" class="file-styled-primary" name="image">
+                                        <span class="filename" style="user-select: none;" id="imagep">Pas d'image</span>
+                                        <span class="action btn bg-blue" style="user-select: none;">Choisir Fichier</span>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -254,6 +241,71 @@
                         //swal("Ajouté !", data, "success");
                         $("#formAjoutProduit").trigger("reset");
                     });
+          });
+
+          $(document).delegate("#InfoArticle","click",function(e){
+              $('#modalInfoPrestataire').find('input, select').attr('disabled','disabled');
+              $(".modal-title").html("Informations sur l'article");
+              $(".actionbutton").attr('id',"Edit_Article");
+              $(".actionbutton").html("Modifier");
+              $('#modalInfoPrestataire').modal('show');
+              $.get("./AriclePrestationByID/"+$(this).attr("ref"),function(data){
+                  $(".editmodale input[name='id']").val(data.id);
+                  $(".editmodale input[name='libelle']").val(data.libelle);
+                  $(".editmodale input[name='documentation']").val(data.documentation);
+                  $(".editmodale input[name='documentationTechnique']").val(data.documentationTechnique);
+                  $(".editmodale input[name='image']").val(data.image);
+
+                  $("#selectCategorie option[value="+data.categorie_id+"]").prop("selected", true);
+
+                  $.uniform.update();
+                  $('#modalInfoPrestataire').modal('show');
+              });
+          });
+
+          $(document).delegate("#InfoPrestataion","click",function(e){
+              $('#modalInfoPrestataire').find('input, select').attr('disabled','disabled');
+              $(".modal-title").html("Informations du Préstation");
+              $(".actionbutton").attr('id',"Edit_produit");
+              $(".actionbutton").html("Modifier");
+              $('#modalInfoPrestataire').modal('show');
+              /*$.get("./PrestataireByID/"+$(this).attr("ref"),function(data){
+                  $(".editmodale input[name='id']").val(data.id);
+                  $(".editmodale input[name='nom']").val(data.nom);
+                  $(".editmodale input[name='prenom']").val(data.prenom);
+                  $(".editmodale input[name='email']").val(data.email);
+                  $(".editmodale input[name='identifiantLegale']").val(data.identifiantLegale);
+                  $(".editmodale input[name='statusEntreprise']").val(data.statusEntreprise);
+
+                  $("#selectRole option[value="+data.role_id+"]").prop("selected", true);
+                  $("#selectEtat option[value="+data.etat+"]").prop("selected", true);
+                  $(".editmodale input[name='compagnie']").val(data.compagnie);
+                  $(".editmodale input[name='tel']").val(data.tel);
+
+                  $.uniform.update();
+                  $('#modalInfoPrestataire').modal('show');
+              });*/
+          });
+
+          $(document).delegate("#Edit_Article","click",function(e){
+                $('#modalInfoPrestataire').find('input, select').attr('disabled',false);
+                $(".actionbutton").attr('id',"EditArticle");
+                $(".actionbutton").html("Enregistrer");
+          });
+
+          $(document).delegate("#EditArticle","click",function(e){
+              $.post("./ArticleUpdate",{
+                  id:$(".editmodale input[name='id']").val(),
+                  libelle:$(".editmodale input[name='libelle']").val(),
+                  documentation:$(".editmodale input[name='documentation']").val(),
+                  documentationTechnique:$(".editmodale input[name='documentationTechnique']").val(),
+                  categorie_id:$(".editmodale select[name='categorie']").val()
+              },function(data){
+                  tablef.ajax.reload();
+                  swal("Modifié !", data, "success");
+                  $('#modalInfoPrestataire').modal('hide');
+                  $.uniform.update();
+              });
           });
 
       });

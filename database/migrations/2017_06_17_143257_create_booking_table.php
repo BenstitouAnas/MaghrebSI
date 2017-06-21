@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDealTable extends Migration
+class CreateBookingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateDealTable extends Migration
      */
     public function up()
     {
-        Schema::create('deals', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('titre');
             $table->double('prix', 15, 8);
-            $table->unsignedInteger('nombrePlaces')->default(0);
-            $table->date('dateLimite');
             $table->unsignedInteger('produit_id');
             $table->timestamps();
 
@@ -33,6 +31,6 @@ class CreateDealTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deals');
+        Schema::dropIfExists('bookings');
     }
 }

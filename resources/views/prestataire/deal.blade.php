@@ -151,7 +151,7 @@
                             <label>Date Limite</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="icon-calendar22"></i></span>
-                                <input type="text" class="form-control daterange-single" value="03/18/2013" name="dateLimite">
+                                <input type="text" class="form-control daterange-single" value="2017-06-17" name="dateLimite">
                             </div>
                         </div>
                     </div>
@@ -180,6 +180,11 @@
   <script>
       $(function() {
 
+          $(document).delegate("#imageProduit","change",function(e){
+                $("#imagep").text(e.target.files[0].name);
+                //$(".editmodale input[name='image']").val(e.target.files[0].name);
+            });
+
           $('#formAjoutProduit').find('input, select').attr('disabled',true);
           $('#btnAnnuler').hide();
 
@@ -206,8 +211,8 @@
 
           $(document).delegate("#Edit_Deal","click",function(e){
               $(".modal-title").html("Modification du Deal");
-              $(".actionbutton2").attr('id',"Edit");
-              $(".actionbutton2").html("Enregistrer");
+              $("#addDeal").attr('id',"Edit");
+              $("#addDeal").html("Enregistrer");
               $.get("../DealByID/"+$(this).attr("ref"),function(data){
                   $(".editmodale2 input[name='idDeal']").val(data.id);
                   $(".editmodale2 input[name='titre']").val(data.titre);
@@ -285,11 +290,6 @@
                     $("#enregisterModification").attr('id',"modifierArticle");
               });
           });
-
-          $(document).delegate("#imageProduit","change",function(e){
-                $("#imagep").text(e.target.files[0].name);
-            });
-
 
             $(document).delegate("#selectType","change",function(e){
                 

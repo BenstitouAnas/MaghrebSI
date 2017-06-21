@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategorieTable extends Migration
+class CreateMessagesclientTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateCategorieTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('messageclients', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('titre', 100);
-            $table->string('description', 250);
-            $table->unsignedInteger('utilisateur_id')->unsigned();
+            $table->text('message');
+            $table->unsignedInteger('ticket_id');
             $table->timestamps();
 
-            //$table->foreign('utilisateur_id')->references('id')->on('utilisateurpros');
+            $table->foreign('ticket_id')->references('id')->on('ticketclients');
         });
     }
 
@@ -31,6 +30,6 @@ class CreateCategorieTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('messageclients');
     }
 }

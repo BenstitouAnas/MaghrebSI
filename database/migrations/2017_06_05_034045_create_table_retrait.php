@@ -17,9 +17,11 @@ class CreateTableRetrait extends Migration
             $table->increments('id');
             $table->string('etat')->default('envoye');
             $table->string('facture', 250);
-            $table->float('montant');
-            $table->integer('utilisateur_id');
+            $table->double('montant', 15, 3)->default(0.0);
+            $table->unsignedInteger('utilisateur_id');
             $table->timestamps();
+
+            //$table->foreign('utilisateur_id')->references('id')->on('utilisateurpros');
         });
     }
 

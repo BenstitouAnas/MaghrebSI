@@ -16,7 +16,7 @@ class CrateRoleTable extends Migration
         Schema::create('roles', function (Blueprint $table) {
           $table->increments('id');
           $table->string('role');
-          $table->string('description');
+          $table->string('description', 150);
           $table->timestamps();
         });
     }

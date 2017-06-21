@@ -56,6 +56,13 @@
             </div>
 
             <div class="form-group">
+                <label class="control-label col-lg-2">Documentation</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" placeholder="Documentation ..." name="documentation">
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="control-label col-lg-2">Documentation Technique</label>
                 <div class="col-lg-10">
                     <input type="text" class="form-control" placeholder="Documentation technique ..." name="documentationTechnique">
@@ -167,7 +174,7 @@
                         qte:$("input[name='qte']").val()
                     },function(data, status){
                         //swal("Ajouté !", data, "success");
-                        window.location.replace("ProduitsByID/"+data);
+                        window.location.replace("Produits");
                         $(this).closest('form').find("input[type=text], textarea").val("");
                     });
           });

@@ -34,14 +34,14 @@ class CategorieController extends Controller
 
 
     public function Categories(){
-        return Datatables::of(DB::table('categories')->select('id','titre','description')->get())
+        return Datatables::of(DB::table('categories')->select('id','titre','description')->where('utilisateur_id', Auth::user()->getAuthIdentifier())->get())
           ->addColumn('action', '<button type="button" id="Del_Categorie" ref="{{$id}}" class="btn btn-link"><i class="icon-cross2"></i></button>&nbsp;&nbsp;<button type="button" id="Edit_Categorie" ref="{{$id}}" class="btn btn-link"><i class="icon-pencil7"></i></button>')
           ->rawColumns(['action'])
           ->make(true);
     }
 
     public function addCategorie(Request $req){
-        DB::table('categories')->insert(['titre' => $req->titre,'description' => $req->description, 'created_at' => new DateTime(), 'updated_at' => new DateTime()]);
+        DB::table('categories')->insert(['titre' => $req->titre,'description' => $req->description, 'utilisateur_id' => Auth::user()->getAuthIdentifier(), 'created_at' => new DateTime(), 'updated_at' => new DateTime()]);
         return 'Catégorie : '.$req->titre.', bien ajoutée !';
 
     }

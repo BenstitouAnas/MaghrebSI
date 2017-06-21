@@ -14,6 +14,7 @@ use DB;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use App\LigneCommande;
+use App\Commande;
 
 class CommandeController extends Controller
 {
@@ -34,6 +35,7 @@ class CommandeController extends Controller
 
 
     public function Commandes(){
+
         return Datatables::of(DB::table('commandes')->select('id','client_id','precision', 'montantTotalHT', 'created_at', 'etat')->get())
           ->addColumn('action', '<button type="button" id="InfosCommande" ref="{{$id}}" class="btn btn-default"><i class="icon-plus2 position-left"></i> Infos</button>')
           ->rawColumns(['action'])

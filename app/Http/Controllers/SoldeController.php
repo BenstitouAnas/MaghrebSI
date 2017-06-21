@@ -42,6 +42,7 @@ class SoldeController extends Controller
 
         //DB::table('retraits')->insert(['etat' => 'envoye','montant' => $req->montant, 'facture' => $req->facture, 'created_at' => new DateTime(), 'updated_at' => new DateTime()]);
         return 'Demande bien envoyée !';
+        
         //return Redirect::to('/Commerciales');
     }
 

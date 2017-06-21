@@ -18,8 +18,10 @@ class CreateTransactionTable extends Migration
             $table->string('evaluation', 1);
             $table->double('montant', 15, 8);
             $table->string('motif');
-            $table->integer('utilisateur_id');
+            $table->unsignedInteger('utilisateur_id');
             $table->timestamps();
+
+            //$table->foreign('utilisateur_id')->references('id')->on('utilisateurpros');
         });
     }
 

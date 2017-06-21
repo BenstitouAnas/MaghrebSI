@@ -15,10 +15,14 @@ class CreateLignecommandeTable extends Migration
     {
         Schema::create('lignecommandes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('produit_id');
+            $table->unsignedInteger('produit_id');
+            $table->integer('typeProduit');
             $table->integer('qte');
-            $table->integer('commande_id');
+            $table->unsignedInteger('commande_id');
             $table->timestamps();
+
+            //$table->foreign('produit_id')->references('id')->on('produits');
+            //$table->foreign('commande_id')->references('id')->on('commandes');
         });
     }
 
