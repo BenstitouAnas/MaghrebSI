@@ -36,10 +36,13 @@ class CommandeController extends Controller
 
     public function Commandes(){
 
-        return Datatables::of(DB::table('commandes')->select('id','client_id','precision', 'montantTotalHT', 'created_at', 'etat')->get())
-          ->addColumn('action', '<button type="button" id="InfosCommande" ref="{{$id}}" class="btn btn-default"><i class="icon-plus2 position-left"></i> Infos</button>')
-          ->rawColumns(['action'])
-          ->make(true);
+        return Datatables::of(DB::table('commandes')
+        ->join('clients', 'commandes.client_id', '=', 'clients.id')
+        ->select('commandes.id','clients.nom', 'clients.prenom','commandes.precision', 'commandes.montantTotalHT', 'commandes.created_at', 'commandes.etat')
+        ->get())
+        ->addColumn('action', '<button type="button" id="InfosCommande" ref="{{$id}}" class="btn btn-default"><i class="icon-plus2 position-left"></i> Infos</button>')
+        ->rawColumns(['action'])
+        ->make(true);
     }
 
     public function getCommandeByID($id){

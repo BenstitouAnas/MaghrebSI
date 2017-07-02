@@ -178,13 +178,12 @@ Route::get('Prestataires/CommandeByID/{x}','CommandeController@getCommandeByID')
 
 
 
-
-
-
-
 Route::get('/Clients', function () {
     return view('client.home');
 });
 
 Route::get('/Clients/Tickets','ClientController@showTtickets');
 Route::get('/Clients/DetailleTicketClient/{x}','ClientController@showDetaillesTicket');
+
+Route::post('/Clients/RepondreTicketClient/{x}','ClientController@repondreTicket');
+

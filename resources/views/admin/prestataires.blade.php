@@ -119,7 +119,9 @@
                                     <label>Role</label>
                                     <select name="role_id" class="form-control" id="selectRole">
                                         @foreach ($roles as $role)
-                                            <option value="{{$role->id}}">{{$role->role}}</option>
+                                            @if($role->role != "Administrateur")
+                                                <option value="{{$role->id}}">{{$role->role}}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -130,7 +132,6 @@
                                         <option value="Confirme">Confirmé</option>
                                         <option value="Attente">En Attente</option>
                                         <option value="Suspendue">Suspendue</option>
-                                        <option value="Autre">Autre</option>
                                     </select>
                                 </div>
                             </div>

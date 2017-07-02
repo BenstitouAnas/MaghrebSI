@@ -55,8 +55,8 @@ $(function() {
         serverSide: true,
         ajax: './CommandesData',
         columns: [{
-                data: 'client_id',
-                name: 'client_id'
+                data: 'nom',
+                name: 'nom'
             }, {
                 data: 'precision',
                 name: 'precision'

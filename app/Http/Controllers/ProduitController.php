@@ -39,7 +39,7 @@ class ProduitController extends Controller
      public function Produits(){
         return Datatables::of(DB::table('produits')->select('produits.id','libelle','image','typeProduit','documentation','prix', 'qte', 'titre', 'categorie_id')
             ->join('categories', function ($join) {
-                $join->on('produits.categorie_id', '=', 'categories.id');
+                $join->on('produits.categorie_id', '=', 'categories.id')->where('utilisateur_id', '=', Auth::user()->getAuthIdentifier());
             })
             ->get())
             ->addColumn('action', function($tt){
@@ -140,7 +140,7 @@ class ProduitController extends Controller
         DB::table('produits')
             ->where('id', $req->id)
             ->update(['libelle' => $req->libelle, 'documentationTechnique' => $req->documentationTechnique,
-            'image' => $req->image, 'categorie_id' => $req->categorie, 'updated_at' => new DateTime()]);
+            'categorie_id' => $req->categorie, 'updated_at' => new DateTime()]);
 
         return 'Produit Deal : '.$produit->libelle.', bien modifié !';
     }

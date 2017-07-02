@@ -3,9 +3,6 @@
     @section('title',"Client - Tickets")
 
 
-
-
-
 @section('js_css')
 @endsection
 

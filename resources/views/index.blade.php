@@ -56,6 +56,7 @@
 						<li><a href="#pricing">Pricing</a></li>
 						<li><a href="#download">Download</a></li>
 						<li><a href="#contact">Contact</a></li>
+						<li><a href="{{ url('/register') }}"><button type="button" class="btn btn-info">S'inscrire</button></a></li>
                         @if (Route::has('login'))
                             @if (Auth::guest())
                             	<li><a href="{{ url('/login') }}"><button type="button" class="btn btn-info">Se Connecter</button></a></li>

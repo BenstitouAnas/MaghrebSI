@@ -68,17 +68,6 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="control-label col-lg-2">Image Produit</label>
-                <div class="col-lg-10">
-                    <div class="uploader">
-                        <input id="imageProduit" type="file" class="file-styled-primary" name="image" value="{{$produit->image}}">
-                        <span class="filename" style="user-select: none;" id="imagep">{{$produit->image}}</span>
-                        <span class="action btn bg-blue" style="user-select: none;">Choisir Fichier</span>
-                    </div>
-                </div>
-            </div>
-
             <div class="text-right">
                 <button type="reset" class="btn btn-default" id="btnAnnuler">Annuler </button>
                 <button type="submit" class="btn btn-primary actionbutton" id="modifierArticle">Modifier <i class="icon-arrow-right14 position-right"></i></button>
@@ -180,11 +169,6 @@
   <script>
       $(function() {
 
-          $(document).delegate("#imageProduit","change",function(e){
-                $("#imagep").text(e.target.files[0].name);
-                //$(".editmodale input[name='image']").val(e.target.files[0].name);
-            });
-
           $('#formAjoutProduit').find('input, select').attr('disabled',true);
           $('#btnAnnuler').hide();
 
@@ -241,6 +225,14 @@
               });
           });
 
+          $(document).delegate("#btnAnnuler","click",function(e){
+                $('#formAjoutProduit').find('input, select').attr('disabled',true);
+                $('#btnAnnuler').hide();
+                $("#enregisterModification").html("Modifier");
+                $("#enregisterModification").attr('id',"modifierArticle");
+                $.uniform.update();
+          });
+
           $(document).delegate("#modifierArticle","click",function(e){
                 $('#formAjoutProduit').find('input, select').attr('disabled',false);
                 $('#btnAnnuler').show();
@@ -276,7 +268,6 @@
                   id:$(".editmodale input[name='id']").val(),
                   libelle:$(".editmodale input[name='libelle']").val(),
                   documentationTechnique:$(".editmodale input[name='documentationTechnique']").val(),
-                  image:$(".editmodale input[name='image']").val(),
                   categorie:$(".editmodale select[name='categorie']").val()
               },function(data){
                   //tablef.ajax.reload();
@@ -289,102 +280,6 @@
                     $("#enregisterModification").html("Modifier");
                     $("#enregisterModification").attr('id',"modifierArticle");
               });
-          });
-
-            $(document).delegate("#selectType","change",function(e){
-                
-                if(this.value == 'article')
-                {
-                    //alert( '0' );
-                    $(".actionbutton").attr('id',"ajouterArticle");
-                    $("#qte").prop('disabled', false);
-                    $("#prix").prop('disabled', false);
-
-                    
-                }
-                if(this.value == 'booking')
-                {
-                    //alert('1' );
-                    $(".actionbutton").attr('id',"ajouterBooking");
-                    $("#qte").prop('disabled', true);
-                    $("#prix").prop('disabled', false);
-                } 
-                if(this.value == 'deal')
-                {
-                    //alert('2');
-                    $(".actionbutton").attr('id',"ajouterDeal");
-                    $("#qte").prop('disabled', true);
-                    $("#prix").prop('disabled', true);
-                } 
-                if(this.value == 'prestation')
-                {
-                    //alert( '3' );
-                    $(".actionbutton").attr('id',"ajouterPrestation");
-                    $("#qte").prop('disabled', true);
-                    $("#prix").prop('disabled', false);
-                }                
-          });
-
-
-          $(document).delegate("#ajouterArticle","click",function(e){
-              $.post("./AjouterArticle",{
-                        libelle:$("input[name='libelle']").val(),
-                        categorie_id:$("select[name='categorie']").val(),
-                        documentation:$("input[name='documentation']").val(),
-                        documentationTechnique:$("input[name='documentationTechnique']").val(),
-                        image:$("input[name='image']").val(),
-                        prix:$("input[name='prix']").val(),
-                        qte:$("input[name='qte']").val()
-                    },function(data, status){
-                        //swal("Ajouté !", data, "success");
-                        window.location.replace("ProduitsByID/"+data);
-                        $(this).closest('form').find("input[type=text], textarea").val("");
-                    });
-          });
-
-          $(document).delegate("#ajouterBooking","click",function(e){
-              $.post("./AjouterBooking",{
-                        libelle:$("input[name='libelle']").val(),
-                        categorie_id:$("select[name='categorie']").val(),
-                        documentation:$("input[name='documentation']").val(),
-                        documentationTechnique:$("input[name='documentationTechnique']").val(),
-                        image:$("input[name='image']").val(),
-                        prix:$("input[name='prix']").val()
-                    },function(data, status){
-                        //swal("Ajouté !", data, "success");
-                        window.location.replace("ProduitsByID/"+data);
-                        $("#formAjoutProduit").trigger("reset");
-                    });
-          });
-
-          $(document).delegate("#ajouterDeal","click",function(e){
-              $.post("./AjouterDeal",{
-                        libelle:$("input[name='libelle']").val(),
-                        categorie_id:$("select[name='categorie']").val(),
-                        documentation:$("input[name='documentation']").val(),
-                        documentationTechnique:$("input[name='documentationTechnique']").val(),
-                        image:$("input[name='image']").val()
-                    },function(data, status){
-                        //swal("Ajouté !", data, "success");
-
-                        window.location.replace("ProduitsByID/"+data);
-                        $("#formAjoutProduit").trigger("reset");
-                    });
-          });
-
-          $(document).delegate("#ajouterPrestation","click",function(e){
-              $.post("./AjouterPrestation",{
-                        libelle:$("input[name='libelle']").val(),
-                        categorie_id:$("select[name='categorie']").val(),
-                        documentation:$("input[name='documentation']").val(),
-                        documentationTechnique:$("input[name='documentationTechnique']").val(),
-                        image:$("input[name='image']").val(),
-                        prix:$("input[name='prix']").val()
-                    },function(data, status){
-                        //swal("Ajouté !", data, "success");
-                        window.location.replace("ProduitsByID/"+data);
-                        $("#formAjoutProduit").trigger("reset");
-                    });
           });
 
       });

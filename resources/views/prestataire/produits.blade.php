@@ -123,6 +123,7 @@
                     </div>
 
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" style="text-align:left;" id="">Widget</button>
                         <button type="button" class="btn btn-link" data-dismiss="modal">Retour</button>
                         <button type="button" class="btn btn-primary actionbutton" id="Edit">Modifier</button>
                     </div>
@@ -141,7 +142,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
-  </script>
+</script>
 
   <script>
       $(function() {

@@ -35,7 +35,7 @@ class CategorieController extends Controller
 
     public function Categories(){
         return Datatables::of(DB::table('categories')->select('id','titre','description')->where('utilisateur_id', Auth::user()->getAuthIdentifier())->get())
-          ->addColumn('action', '<button type="button" id="Del_Categorie" ref="{{$id}}" class="btn btn-link"><i class="icon-cross2"></i></button>&nbsp;&nbsp;<button type="button" id="Edit_Categorie" ref="{{$id}}" class="btn btn-link"><i class="icon-pencil7"></i></button>')
+          ->addColumn('action', '</button>&nbsp;&nbsp;<button type="button" id="Edit_Categorie" ref="{{$id}}" class="btn btn-link"><i class="icon-pencil7"></i></button>')
           ->rawColumns(['action'])
           ->make(true);
     }

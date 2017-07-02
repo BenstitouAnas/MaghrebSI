@@ -20,8 +20,6 @@
           <h6 class="panel-title">Liste des Demandes des Commerciaux</h6>
           <div class="heading-elements">
       			<ul class="icons-list">
-                  <li><button type="button" class="btn btn-primary addbutton" id="Send_Email"><i class="glyphicon glyphicon-plus"></i>  Email</button></li>
-                    <li><button type="button" class="btn btn-primary addbutton" id="Add_Commerciale"><i class="glyphicon glyphicon-plus"></i>  Ajouter Prestataire</button></li>
       				<li><a data-action="collapse"></a></li>
       				<li><a data-action="reload"></a></li>
       			</ul>

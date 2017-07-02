@@ -58,10 +58,8 @@ class PrestataireController extends Controller
             'compagnie' => $req->compagnie, 'role_id' => $req->role_id, 'statusEntreprise' => $req->statusEntreprise, 'etat' => 'Confirme',
             'tel' => $req->tel, 'typeUser' => 2,'password' => 'NotDefined', 'created_at' => new DateTime(), 'updated_at' => new DateTime()]);
 
-        
-        //dd('Mail Send Successfully');
 
-        return 'Préstataire : '.$req->nom.' '.$req->prenom.', bien ajouté !';
+        return 'Prestataire : '.$req->nom.' '.$req->prenom.', bien ajouté !';
     }
 
 
@@ -103,9 +101,9 @@ class PrestataireController extends Controller
             ->where('id', $req->id)
             ->update(['nom' => $req->nom, 'prenom' => $req->prenom, 'email' => $req->email, 'identifiantLegale' => $req->identifiantLegale,
             'compagnie' => $req->compagnie, 'role_id' => $req->role_id, 'statusEntreprise' => $req->statusEntreprise, 'etat' => $req->etat,
-            'tel' => $req->tel]);
+            'tel' => $req->tel, 'updated_at' => new DateTime()]);
 
-        return 'Péstataire : '.$prestataire->nom.' '.$prestataire->prenom.', bien modifié !';
+        return 'Pestataire : '.$prestataire->nom.' '.$prestataire->prenom.', bien modifié !';
     }
 
 }

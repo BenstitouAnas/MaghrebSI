@@ -3,9 +3,6 @@
     @section('title',"Client - Tickets")
 
 
-
-
-
 @section('js_css')
 @endsection
 
@@ -26,7 +23,7 @@
 
             <li class="media">
                 <div class="media-left">
-                    <a href="{{asset('./assets/images/placeholder.jpg')}}">
+                    <a>
                         <img src="{{asset('./assets/images/placeholder.jpg')}}" class="img-circle" alt="">
                     </a>
                 </div>
@@ -39,59 +36,11 @@
 
         @endforeach
 
-            <!--<li class="media reversed">
-                <div class="media-body">
-                    <div class="media-content">Far squid and that hello fidgeted and when. As this oh darn but slapped casually husky sheared that cardinal hugely one and some unnecessary factiously hedgehog a feeling one rudely much but one owing sympathetic regardless more astonishing evasive tasteful much.</div>
-                    <span class="media-annotation display-block mt-10">Mon, 10:24 am <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                </div>
-
-                <div class="media-right">
-                    <a href="{{asset('./assets/images/placeholder.jpg')}}">
-                        <img src="{{asset('./assets/images/placeholder.jpg')}}" class="img-circle" alt="">
-                    </a>
-                </div>
-            </li>
-
-            <li class="media">
-                <div class="media-left">
-                    <a href="{{asset('./assets/images/placeholder.jpg')}}">
-                        <img src="{{asset('./assets/images/placeholder.jpg')}}" class="img-circle" alt="">
-                    </a>
-                </div>
-
-                <div class="media-body">
-                    <div class="media-content">Darn over sour then cynically less roadrunner up some cast buoyant. Macaw krill when and upon less contrary warthog jeez some koala less since therefore minimal.</div>
-                    <span class="media-annotation display-block mt-10">Mon, 10:56 am <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                </div>
-            </li>
-
-            <li class="media reversed">
-                <div class="media-body">
-                    <div class="media-content">Some upset impious a and submissive when far crane the belched coquettishly. More the puerile dove wherever</div>
-                    <span class="media-annotation display-block mt-10">Mon, 11:29 am <a href="#"><i class="icon-pin-alt position-right text-muted"></i></a></span>
-                </div>
-
-                <div class="media-right">
-                    <a href="{{asset('./assets/images/placeholder.jpg')}}">
-                        <img src="{{asset('./assets/images/placeholder.jpg')}}" class="img-circle" alt="">
-                    </a>
-                </div>
-            </li>
-
-            <li class="media reversed">
-                <div class="media-body">
-                    <div class="media-content"><i class="icon-menu display-block"></i></div>
-                </div>
-
-                <div class="media-right">
-                    <a href="{{asset('./assets/images/placeholder.jpg')}}">
-                        <img src="{{asset('./assets/images/placeholder.jpg')}}" class="img-circle" alt="">
-                    </a>
-                </div>
-            </li>-->
         </ul>
 
-        <textarea name="enter-message" class="form-control content-group" rows="3" cols="1" placeholder="Enter your message..."></textarea>
+        @if($ticket->active == '1')
+
+        <textarea name="enter-message" class="form-control content-group" rows="3" cols="1" placeholder="Enter your message..." id="message"></textarea>
 
         <div class="row">
             <div class="col-xs-6">
@@ -99,9 +48,17 @@
                 </ul>
             </div>
             <div class="col-xs-6 text-right">
-                <button type="button" class="btn bg-teal-400 btn-labeled btn-labeled-right"><b><i class="icon-circle-right2"></i></b> Répondre</button>
+                <button type="button" class="btn bg-teal-400 btn-labeled btn-labeled-right" id="repondre"><b><i class="icon-circle-right2"></i></b> Répondre</button>
             </div>
         </div>
+
+        @else
+
+        <div class="alert alert-info">
+            <strong>Info !</strong> Ce ticket est fermé !
+        </div>
+
+        @endif
 
     </div>
 </div>
@@ -141,42 +98,20 @@
                   );
           });
 
-          $(document).delegate("#Edit_Categorie","click",function(e){
-              $(".modal-title").html("Modification du Categorie");
-              $(".actionbutton").attr('id',"Edit");
-              $(".actionbutton").html("Enregistrer");
-              $.get("./CategorieByID/"+$(this).attr("ref"),function(data){
-                  $(".editmodale input[name='id']").val(data.id);
-                  $(".editmodale input[name='categorie']").val(data.titre);
-                  $(".editmodale input[name='description']").val(data.description);
-                  $.uniform.update();
-                  $('#modal_theme_success').modal('show');
-              });
-          });
 
-          $(document).delegate("#Edit","click",function(e){
-              $.post("./CategorieUpdate",{
-                  id:$(".editmodale input[name='id']").val(),
-                  titre:$(".editmodale input[name='categorie']").val(),
-                  description:$(".editmodale input[name='description']").val()
+          $(document).delegate("#repondre","click",function(e){
+              
+              //alert({{$ticket->id}});
+              $.post("./RepondreTicketClient"+{{$ticket->id}},{
+                  ticket:$(".editmodale input[name='id']").val(),
+                  message:$("#message").val()
               },function(data){
-                  tablef.ajax.reload();
+                  /*tablef.ajax.reload();
                   swal("Modifié !", data, "success");
                   $('#modal_theme_success').modal('hide');
                   $("#formcategorie").trigger("reset");
                   //$('#modal_theme_success').modal('show');
-                  $.uniform.update();
-              });
-          });
-
-          $(document).delegate("#Add_Categorie","click",function(e){
-              $.post("./CategorieAdd",{
-                    titre:$("[id=categorieAjouter]").val(),
-                    description:$("[id=descriptionAjouter]").val()
-              },function(data, status){
-                    tablef.ajax.reload();
-                    swal("Ajouté !", data, "success");
-                    $("#formCategorieAjout").trigger("reset");
+                  $.uniform.update();*/
               });
           });
       });

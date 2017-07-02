@@ -20,8 +20,6 @@
           <h6 class="panel-title">Liste des Commerciaux</h6>
           <div class="heading-elements">
       			<ul class="icons-list">
-                  <li><button type="button" class="btn btn-primary addbutton" id="Send_Email"><i class="glyphicon glyphicon-plus"></i>  Email</button></li>
-                    <li><button type="button" class="btn btn-primary addbutton" id="Add_Commerciale"><i class="glyphicon glyphicon-plus"></i>  Ajouter Prestataire</button></li>
       				<li><a data-action="collapse"></a></li>
       				<li><a data-action="reload"></a></li>
       			</ul>
@@ -116,7 +114,9 @@
                                     <label>Role</label>
                                     <select name="role_id" class="form-control" id="selectRole">
                                         @foreach ($roles as $role)
-                                            <option value="{{$role->id}}">{{$role->role}}</option>
+                                            @if($role->role != "Administrateur")
+                                                <option value="{{$role->id}}">{{$role->role}}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -136,7 +136,6 @@
                                         <option value="Confirme">Confirmé</option>
                                         <option value="Attente">En Attente</option>
                                         <option value="Suspendue">Suspendue</option>
-                                        <option value="Autre">Autre</option>
                                     </select>
                                 </div>
                             </div>

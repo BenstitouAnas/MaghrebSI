@@ -19,7 +19,6 @@ use Mail;
 use App\UtilisateurPro;
 use App\User;
 
-
 class CommercialeController extends Controller
 {
     public function showCommerciales(){
@@ -85,7 +84,7 @@ class CommercialeController extends Controller
             ->where('id', $req->id)
             ->update(['nom' => $req->nom, 'prenom' => $req->prenom, 'email' => $req->email, 'identifiantLegale' => $req->identifiantLegale,
             'compagnie' => $req->compagnie, 'role_id' => $req->role_id, 'statusEntreprise' => $req->statusEntreprise, 'etat' => $req->etat,
-            'superieur' => $req->superieur,'tel' => $req->tel]);
+            'superieur' => $req->superieur,'tel' => $req->tel, 'updated_at' => new DateTime()]);
 
         return 'Commerciale : '.$commerciale->nom.' '.$commerciale->prenom.', bien modifié !';
     }
